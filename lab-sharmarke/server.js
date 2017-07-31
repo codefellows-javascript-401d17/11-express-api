@@ -5,7 +5,7 @@ express = require('express'),
 morgan = require('morgan'),
 createError = require('http-errors'),
 jsonParser = require('body-parser').json(),
-debug = require('debug')('note:server'),
+debug = require('debug')('car:server'),
 Car = require('./model/car.js'),
 
 PORT = process.env.PORT || 3000,

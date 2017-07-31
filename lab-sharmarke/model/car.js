@@ -1,13 +1,12 @@
 'use strict';
 
-const
-uuidv4 = require('uuid/v4'),
-createError = require('http-errors'),
-debug = require('debug')('note:car'),
- storage = require('../lib/storage.js');
+const uuidv4 = require('uuid/v4');
+const createError = require('http-errors');
+const debug = require('debug')('car:car');
+const storage = require('../lib/storage.js');
 
 const Car = module.exports = function(make, model, year) {
-  debug('note contructor');
+  debug('car contructor');
 
   if (!make) throw new Error('expected make');
   if (!model) throw new Error('expected model');
@@ -32,5 +31,5 @@ Car.createCar = function(_car) {
 
 Car.fetchCar = function(id) {
   debug('fetchCar');
-  return storage.fetchItem('note', id);
+  return storage.fetchItem('car', id);
 }
