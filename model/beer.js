@@ -3,7 +3,7 @@
 const uuidv4 = require('uuid/v4');
 const createError = require('http-errors');
 const debug = require('debug')('beer:beer');
-const storage = require('../lib/storage.js')
+const storage = require('../lib/storage.js');
 
 const Beer = module.exports = function(name, style, IBU) {
   debug('beer constructor');
