@@ -21,23 +21,15 @@ app.post('/api/pokemon', jsonParser, function(req, res, next) {
   debug('POST: /api/pokemon');
 
   Pokemon.createPokemon(req.body)
-  .then((pokemon) => res.json(pokemon))
-  .catch((err) => next(err));
-});
-
-app.get('/api/pokemon', function(req, res, next) {
-  debug('GET: /api/pokemon');
-
-  Pokemon.fetchPokemon(req.query.id)
-  .then((pokemon) => res.json(pokemon))
-  .catch((err) => next(err));
+  .then(pokemon => res.json(pokemon))
+  .catch(err => next(err));
 });
 
 app.delete('/api/pokemon', function(req, res, next) {
   debug('DELETE: /api/pokemon');
 
   Pokemon.deletePokemon(req.query.id)
-  .then(console.log('selected item was deleted'))
+  .then(() => createError(204, 'song deleted'))
   .catch((err) => next(err));
 });
 
