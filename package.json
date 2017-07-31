@@ -20,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/ohjonah/11-express-api/issues"
   },
-  "homepage": "https://github.com/ohjonah/11-express-api#readme"
+  "homepage": "https://github.com/ohjonah/11-express-api#readme",
+  "devDependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "debug": "^2.6.8",
+    "http-errors": "^1.6.1",
+    "morgan": "^1.8.2",
+    "uuid": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.15.3"
+  }
 }
