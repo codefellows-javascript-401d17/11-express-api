@@ -20,7 +20,7 @@ app.get('/test', function(req, res) {
 app.post('/api/pokemon', jsonParser, function(req, res, next) {
   debug('POST: /api/pokemon');
 
-  Pokemon.createPokemon(req.body)n
+  Pokemon.createPokemon(req.body)
   .then((pokemon) => res.json(pokemon))
   .catch((err) => next(err));
 });
