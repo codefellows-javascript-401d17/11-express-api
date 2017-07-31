@@ -33,6 +33,14 @@ app.get('/api/pokemon', function(req, res, next) {
   .catch((err) => next(err));
 });
 
+app.delete('/api/pokemon', function(req, res, next) {
+  debug('DELETE: /api/pokemon');
+
+  Pokemon.deletePokemon(req.query.id)
+  .then(console.log('selected item was deleted'))
+  .catch((err) => next(err));
+});
+
 app.use(function(err, req, res, next) {
   debug('error middleware');
   console.error(err.message);

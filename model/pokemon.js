@@ -31,3 +31,8 @@ Pokemon.fetchPokemon = function(id) {
   debug('fetchPokemon');
   return storage.fetchItem('pokemon', id);
 };
+
+Pokemon.deletePokemon = function(id) {
+  debug('deletePokemon');
+  return storage.deleteItem('pokemon', id);
+};
