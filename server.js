@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const createError = require('http-errors');
 const jsonParser = require('body-parser').json();
 const debug = require('debug')('bake:server');
-const Note = require('./model/bake.js');
+const Bake = require('./model/bake.js');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -36,7 +36,7 @@ app.get('/api/bake', function(req, res, next) {
   .catch( err => next(err));
 });
 
-app.use(function(err, req, res) {
+app.use(function(err, req, res, next) {
   debug('error middleware');
   console.error(err.message);
 
@@ -49,9 +49,6 @@ app.use(function(err, req, res) {
   res.status(err.status).send(err.name);
 });
 
-
-
-
 app.listen(PORT, () => {
-  debug(`Server listening on PORT: ${PORT}`);
+  console.log(`Server listening on PORT: ${PORT}`);
 });
