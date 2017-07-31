@@ -38,22 +38,22 @@ app.use(function(err, req, res, next){
   debug('error middleware');
   console.error(err.message);
 
-  if(err.status){
-    res.status(err.status).send(err.name);
+  // if(err.status){
+  //   res.status(err.status).send(err.name);
+  //   return;
+  // }
+
+
+  if(res.status(400)){
+    res.status(400).send(err.message);
     return;
   }
+
 
   if(res.status(404)){
-    res.status(404).send('Not Found');
+    res.status(404).send(err.message);
     return;
   }
-
-  if(err.status(400)){
-    res.status(400).send('Bad Request');
-    return;
-  }
-
-
 
   err = createError(500, err.message);
   res.status(err.status).send(err.name);
