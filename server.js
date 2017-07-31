@@ -32,6 +32,13 @@ app.get('/api/beer', function(req, res, next) {
   .catch( err => next(err));
 });
 
+app.delete('/api/beer', function(req, res, next) {
+  debug('DELETE: /api/beet');
+  Beer.deleteBeer(req.query.id)
+  .then( () => res.send('Deleted beer'))
+  .catch( err => next(err));
+});
+
 
 
 app.listen(PORT, () => {
