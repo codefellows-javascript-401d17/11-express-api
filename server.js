@@ -12,7 +12,7 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.get('/test', function(req, res){
+app.get('/test', function(req, res) {
   debug('GET: /test');
   res.json({msg: 'you have tested a GET req'});
 });
@@ -21,6 +21,13 @@ app.post('/api/beer', jsonParser, function (req, res, next) {
   debug('POST: /apo/beer');
 
   Beer.createBeer(req.body)
+  .then( beer => res.json(beer))
+  .catch( err => next(err));
+});
+
+app.get('/api/beer', function(req, res, next) {
+  debug('GET: /api/beer');
+  Beer.fetchBeer(req.query.id)
   .then( beer => res.json(beer))
   .catch( err => next(err));
 });
