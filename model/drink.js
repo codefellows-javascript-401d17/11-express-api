@@ -5,4 +5,4 @@ const Drink = module.exports = function(name, flavor, isAlcoholic) {
   this.name = name;
   this.flavor = flavor;
   this.isAocoholic = isAlcoholic;
-}
+};
