@@ -12,12 +12,11 @@ const app = express();
 
 app.use(morgan('dev'));
 
-const modelKeys = Object.keys(modelPaths.models);
-modelKeys.forEach(key => {
-  modelPaths.allRoutes(key, app);
-})
 
-  
+for(let key in modelPaths.models) {
+  modelPaths.allRoutes(key, app);
+}
+
 app.listen(PORT, () => {
   debug(console.log('server on at port:', PORT));
 });

@@ -45,6 +45,7 @@ modelRoutes.modelGet = function(model,router) {
 
     } else if (!req.query.id) {
       
+      
       storage.fetchItem(`${model}`)
       .then(item => res.json(item))
       .catch(err => {
@@ -65,16 +66,17 @@ modelRoutes.modelPost = function(model, router) {
     for(let key in req.body) {
       params.push(req.body[key]);
     }
+
     try {
       var newObj = new modelRoutes.models[model](...params);
+      storage.createItem(`${model}`, newObj)
+     .then(item => res.json(item))
+     .catch(err => next(err));
+     
     } catch(err) {
       err = createError(400, err.message);
       next(err);
     }
-
-    storage.createItem(`${model}`, newObj)
-    .then(item => res.json(item))
-    .catch(err => next(err));
   });
 }
 

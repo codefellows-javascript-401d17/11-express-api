@@ -6,7 +6,6 @@ const fs = require('fs')
 const autoDataDir = module.exports = function(models) {
 
   let labDir = fs.readdirSync('.');
-  console.log(Object.keys(models).length)
   if (!labDir.includes('data')) fs.mkdirSync('./data');
   autoModelDir(models);
 };

@@ -15,7 +15,7 @@ exports.createItem = function(category, item) {
   let stringObj = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${category}/${item.id}.json`, stringObj)
   .then(() => item)
-  .catch(err => Promise.reject(err));
+  .catch(err => Promise.reject(createError(404, err.message)));
 }
 
 
@@ -31,7 +31,7 @@ exports.fetchItem = function(category, id) {
       let item = JSON.parse(data.toString());
       return item;
     } catch (err) {
-      return Promise.reject(err);
+      return Promise.reject(createError(404, err.message));
     }
   })
 };
@@ -43,7 +43,7 @@ exports.deleteItem = function(category, id) {
 
   return fs.unlinkProm(`${__dirname}/../data/${category}/${id}.json`)
   .then(() => '')
-  .catch(err => Promise.reject(err));
+  .catch(err => Promise.reject(createError(404, err.message)));
 
 };
 
@@ -56,5 +56,5 @@ exports.fetchCategory= function(category) {
     data = data.map(id => id.split('.json')[0])
     return data;
   })
-  .catch(err => Promise.reject(err))
+  .catch(err => Promise.reject(createError(404, err.message)))
 }
