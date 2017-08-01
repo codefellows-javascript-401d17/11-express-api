@@ -2,30 +2,33 @@ const uuid = require('uuid/v4');
 const debug = require('debug')('drink.js');
 const storage = require('../lib/storage.js');
 
-const Drink = module.exports = function(name, flavor, isAlcoholic) {
+const Drink = module.exports = function (name, flavor, isAlcoholic) {
   this.id = uuid();
   this.name = name;
   this.flavor = flavor;
-  this.isAocoholic = isAlcoholic;
+  this.isAlcoholic = isAlcoholic;
 };
 
 Drink.createDrink = function (_drink) {  //prevent clashing
-  debug('createDrink');
-  try {
-    let drink = new Drink(_drink.name, _drink.flavor, _drink.isAlcoholic);
 
+  debug('createDrink');
+  if (Object.keys(_drink).includes('name', 'flavor', 'isAlcoholic')) {
+
+    let drink = new Drink(_drink.name, _drink.flavor, _drink.isAlcoholic);
     return storage.createItem('drink', drink);
-  } catch (err) {
-    return Promise.reject(err);
-  }
+  } 
+  return Promise.reject();
+
 };
+
 
 Drink.fetchDrink = function (id) {
   debug('fetchDrink');
+  debug(id);
   return storage.fetchItem('drink', id);
 };
 
-Drink.deleteDrink = function(id) {
+Drink.deleteDrink = function (id) {
   debug('deleteDrink');
   return storage.deleteItem('drink', id);
 }
