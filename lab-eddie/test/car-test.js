@@ -45,7 +45,7 @@ describe('car Routes', function() {
       request.delete(`localhost:3000/api/car?id=${car.id}`)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
         expect(res.body.make).to.equal(undefined);
         expect(res.body.model).to.equal(undefined);
         expect(res.body.year).to.equal(undefined);

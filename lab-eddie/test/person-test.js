@@ -57,7 +57,7 @@ describe('person Routes', function() {
       request.delete(`localhost:3000/api/person?id=${person.id}`)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
         expect(res.body.first).to.equal(undefined);
         expect(res.body.last).to.equal(undefined);
         expect(res.body.age).to.equal(undefined);

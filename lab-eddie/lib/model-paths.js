@@ -78,6 +78,8 @@ modelRoutes.modelDelete = function(model, router) {
       .then(item => res.json(item))
       .catch( err => next(err));
 
+      res.status(204)
+
       return;
     };
   });
