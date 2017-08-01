@@ -10,7 +10,7 @@ const Hike = module.exports = function(name, distance, difficulty) {
 
   if(!name) throw new Error('expected name');
   if(!distance) throw new Error('expected distance');
-  if(!difficulty) throw new Error('expected difficulty ');;
+  if(!difficulty) throw new Error('expected difficulty ');
 
   this.id = uuidv4();
   this.name = name;
@@ -23,7 +23,7 @@ Hike.createHike = function(_hike){
 
   try {
     let hike = new Hike(_hike.name, _hike.distance, _hike.difficulty);
-    console.log(_hike.name, _hike.distance, _hike.difficulty)
+    console.log(_hike.name, _hike.distance, _hike.difficulty);
     console.log('constructed hike', hike);
     return storage.createItem('hike', hike);
   } catch (err){
