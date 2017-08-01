@@ -19,10 +19,8 @@ describe('endpoints', function () {
     });
     it('should respond with 400 if no request body was provided or the body was invalid', (done) => {
       request.post('localhost:8000/api/drink')
-        .send({})
         .end((err, rsp) => {
-          if (err) return (err);
-          expect(rsp.status).to.equal(400);
+          expect(err.status).to.equal(400);
           done();
         });
     });

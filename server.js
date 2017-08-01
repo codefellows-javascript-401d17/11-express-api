@@ -22,10 +22,11 @@ app.get('/api/drink', function (req, rsp, next) {
 
 app.post('/api/drink', jsonParser, function (req, rsp, next) {
   debug('POST: /drink');
-  if(!Object.keys(req.body).includes('name', 'isAlcoholic', 'flavor')) {
-    return next.createError(400, 'bad request');
+  if (!Object.keys(req.body).includes('name', 'isAlcoholic', 'flavor')) {
+    next(createError(400, 'bad request'));
+    return;
   }
-  
+
 
   Drink.createDrink(req.body)
     .then((drink) => {
@@ -49,10 +50,9 @@ app.delete('/api/drink', jsonParser, function (req, rsp, next) {
 
 app.use(function (err, req, rsp, next) {
   debug('error middleware');
-  debug(err);
-  if (err.status) {
-    return rsp.status(err.status).send(err.message);
-  }
+  debug('ERROR STATUS', err.status);
+  rsp.status(err.status).send(err.message);
+  return;
 });
 
 app.listen(PORT, function (req, rsp) {
