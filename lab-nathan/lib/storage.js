@@ -27,3 +27,7 @@ storage.removeItem = function(categoryName, id) {
   return fsPromises.deleteFile(`${__dirname}/../data/${categoryName}/${id}.json`)
     .catch(error => Promise.reject(error));
 };
+
+storage.itemExists = function(categoryName, id) {
+  return fsPromises.exists(`${__dirname}/../data/${categoryName}/${id}.json`);
+};

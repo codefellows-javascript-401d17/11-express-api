@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 
 app.get('/', function(request, response) {
   debug('GET: /');
-  response.json({ message: 'Welcome to Nathan\'s Book REST API' });
+  response.send('Welcome to Nathan\'s Book API using Express.');
 });
 
 app.get('/api/book', function(request, response, next) {
@@ -24,9 +24,14 @@ app.get('/api/book', function(request, response, next) {
 
 app.post('/api/book', jsonParser, function(request, response, next) {
   debug('POST: /api/book');
+
+  if (Object.keys(request.body).length === 0) {
+    return next(createError(400, 'Book not provided.'));
+  }
+
   Book.create(request.body)
     .then(book => response.json(book))
-    .catch(error => next(error));
+    .catch(error => next(createError(400, error.message)));
 });
 
 app.delete('/api/book', function(request, response, next) {
@@ -36,21 +41,25 @@ app.delete('/api/book', function(request, response, next) {
     .catch(error => next(error));
 });
 
-app.use(function(error, request, response) {
+app.use(function(error, request, response, next) {
   debug('error middleware');
   console.error(error);
 
+  if (!next) {
+    error = createError(404);
+  }
+
   if (error.status) {
-    response.status(error.status).send(error.name);
-    return;
+    return response.status(error.status).send(error.message);
   }
 
   error = createError(500, error.message);
+  debug(error);
   response.status(error.status).send(error.name);
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
-  console.log(`Server started on port ${PORT}.`);
+  debug(`Server started on port ${PORT}.`);
 });

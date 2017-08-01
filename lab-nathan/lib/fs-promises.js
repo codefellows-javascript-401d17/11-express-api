@@ -59,3 +59,12 @@ fsPromises.deleteFile = function(path) {
   });
 };
 
+fsPromises.exists = function(path) {
+  debug('exists');
+  return new Promise(function(resolve) {
+    fs.exists(path, function(exists) {
+      resolve(exists);
+    });
+  });
+};
+
