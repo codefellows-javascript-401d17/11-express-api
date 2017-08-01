@@ -89,9 +89,7 @@ describe('Baked Good Routes', function() {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(204);
-        console.log('HDY HDSHDZLKVJSDLZKJVKZSJDV');
         expect(res.body.bakedGood).to.equal(undefined);
-        console.log('ZZZZZZZZZZZ');
         done();
       });
     });
