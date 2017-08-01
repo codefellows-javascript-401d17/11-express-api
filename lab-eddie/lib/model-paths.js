@@ -32,16 +32,17 @@ modelRoutes.allRoutes = function(model, router) {
 modelRoutes.modelGet = function(model,router) {
   router.get(`/api/${model}`,jsonParser, function(req, res, next) {
     debug(`GET: api/${model}`);
-    if (req.url.query.id) {
-      storage.fetchItem(`${model}`, req.url.query.id)
-      .then(item => res.JSON(item))
+    if (req.query) {
+      storage.fetchItem(`${model}`, req.query.id)
+      .then(item => res.json(item))
       .catch(err => next(err));
 
       return;
 
-    } else if (req.url.query) {
+    } else if (!req.query.id) {
+      
       storage.fetchItem(`${model}`)
-      .then(item => res.JSON(item))
+      .then(item => res.json(item))
       .catch(err => next(err));
 
       return;
@@ -52,16 +53,17 @@ modelRoutes.modelGet = function(model,router) {
 modelRoutes.modelPost = function(model, router) {
   router.post(`/api/${model}`,jsonParser, function(req, res, next) {
     debug(`POST: api/${model}`);
-
+    
     let params = [];
     for(let key in req.body) {
+      
       params.push(req.body[key]);
     }
 
     var newObj = new modelRoutes.models[model](...params);
 
     storage.createItem(`${model}`, newObj)
-    .then(item => res.JSON(item))
+    .then(item => res.json(item))
     .catch(err => next(err));
   });
 }
@@ -70,10 +72,10 @@ modelRoutes.modelDelete = function(model, router) {
 
   router.delete(`/api/${model}`,jsonParser, function(req, res, next) {
     debug(`DELETE: api/${model}`);
-    if (req.url.query.id) {
+    if (req.query.id) {
       
-      storage.deleteItem(`${model}`, req.url.query.id)
-      .then(item => res.JSON(item))
+      storage.deleteItem(`${model}`, req.query.id)
+      .then(item => res.json(item))
       .catch( err => next(err));
 
       return;
