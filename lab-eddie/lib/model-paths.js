@@ -75,10 +75,7 @@ modelRoutes.modelPost = function(model, router) {
 
     storage.createItem(`${model}`, newObj)
     .then(item => res.json(item))
-    .catch(err => {
-      err = createError(400, err.message);
-      next(err);
-    });
+    .catch(err => next(err));
   });
 }
 
@@ -90,7 +87,7 @@ modelRoutes.modelDelete = function(model, router) {
       
       storage.deleteItem(`${model}`, req.query.id)
       .then(item => res.json(item))
-      .catch( err => next(err));
+      .catch(err => next(err));
 
       res.status(204)
 
