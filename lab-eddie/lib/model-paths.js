@@ -37,7 +37,7 @@ modelRoutes.modelGet = function(model,router) {
       storage.fetchItem(`${model}`, req.query.id)
       .then(item => res.json(item))
       .catch(err => {
-        err = createError(404, err.message);
+        err = createError(404, 'Resource not found');
         next(err);
       });
 
@@ -49,7 +49,7 @@ modelRoutes.modelGet = function(model,router) {
       storage.fetchItem(`${model}`)
       .then(item => res.json(item))
       .catch(err => {
-        err = createError(404, err.message);
+        err = createError(404, 'Resource not found');
         next(err);
       });
       return;
