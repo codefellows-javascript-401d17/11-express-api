@@ -63,7 +63,6 @@ modelRoutes.modelPost = function(model, router) {
     
     let params = [];
     for(let key in req.body) {
-      
       params.push(req.body[key]);
     }
     try {
