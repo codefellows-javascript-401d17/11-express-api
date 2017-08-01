@@ -12,7 +12,6 @@ describe('endpoints', function () {
         .end((err, rsp) => {
           if (err) return (err);
           expect(rsp.status).to.equal(200);
-          console.log(rsp.body);
           drink = rsp.body;
           done();
         });
@@ -27,7 +26,6 @@ describe('endpoints', function () {
   });
   describe('GET /api/drink', () => {
     it('should return a status code 200', (done) => {
-      console.log('get api drink:', drink.id);
       request
         .get('localhost:8000/api/drink')
         .query({ id: drink.id})
