@@ -4,8 +4,8 @@ const storage = require('../lib/storage.js');
 const createError = require('http-errors');
 
 const Drink = module.exports = function (name, flavor, isAlcoholic) {
-  if(!name) return createError(400, 'bad request - no name provided');
-  if(!flavor) return createError(400, 'bad reqeuest - no flavor provided');
+  if (!name) return createError(400, 'bad request - no name provided');
+  if (!flavor) return createError(400, 'bad reqeuest - no flavor provided');
   this.id = uuid();
   this.name = name;
   this.flavor = flavor;
@@ -18,7 +18,7 @@ Drink.createDrink = function (_drink) {  //prevent clashing
     debug('try block');
     var drink = new Drink(_drink.name, _drink.flavor, _drink.isAlcoholic);
     return Promise.resolve(storage.createItem('drink', drink));
-  } catch(err) {
+  } catch (err) {
     debug('err block');
     return Promise.reject(err);
   }
@@ -28,11 +28,12 @@ Drink.createDrink = function (_drink) {  //prevent clashing
 Drink.fetchDrink = function (id) {
 
   debug('fetchDrink');
-  if (id) {
+  try {
     debug('has id', id);
     return storage.fetchItem('drink', id);
+  } catch (err) {
+    return Promise.reject(err);
   }
-  return Promise.reject(err);
 };
 
 Drink.deleteDrink = function (id) {

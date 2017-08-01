@@ -11,6 +11,10 @@ const createError = require('http-errors');
 
 app.get('/api/drink', function (req, rsp, next) {
   debug('GET: /api/drink');
+  if (!(req.query.id)) {
+    next(createError(400, 'bad request'));
+    return;
+  }
   Drink.fetchDrink(req.query.id)
     .then((drink) => {
       rsp.json(drink);
@@ -33,7 +37,8 @@ app.post('/api/drink', jsonParser, function (req, rsp, next) {
       rsp.json(drink);
     })
     .catch((err) => {
-      next(err);
+      next(createError(400, 'bad request'));
+      return;
     });
 });
 
@@ -51,8 +56,7 @@ app.delete('/api/drink', jsonParser, function (req, rsp, next) {
 app.use(function (err, req, rsp, next) {
   debug('error middleware');
   debug('ERROR STATUS', err.status);
-  rsp.status(err.status).send(err.message);
-  return;
+  return rsp.status(err.status).send(err.message);
 });
 
 app.listen(PORT, function (req, rsp) {

@@ -43,7 +43,7 @@ describe('endpoints', function () {
         .get('localhost:8000/api/drink')
         .query({})
         .end((err, rsp) => {
-          expect(rsp.status).to.equal(400);
+          expect(err.status).to.equal(400);
           done();
         });
     });
