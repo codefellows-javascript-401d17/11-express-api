@@ -24,7 +24,7 @@ describe('endpoints', function () {
       done();
     });
   });
-    describe('GET /api/drink', () => {
+  describe('GET /api/drink', () => {
     it('should return a status code 200', (done) => {
       const id = '2f980f85-513d-4afc-9ade-f8de433a0c09';
       request
@@ -32,6 +32,28 @@ describe('endpoints', function () {
         .query({ id: '2f980f85-513d-4afc-9ade-f8de433a0c09' })
         .end(function (err, rsp) {
           expect(rsp.status).to.equal(200);
+          done();
+        });
+    });
+  });
+  describe('GET /api/drink', () => {
+    it('it should respond with bad request if no id was provided in the request', (done) => {
+      request
+        .get('localhost:8000/api/drink')
+        .query({})
+        .end(function (err, rsp) {
+          expect(rsp.status).to.equal(400);
+          done();
+        });
+    });
+  });
+  describe('GET /api/drink', () => {
+    it('it should respond with not found for valid requests made with an id that was not found', (done) => {
+      request
+        .get('localhost:8000/api/drink')
+        .query({ id : '12345'})
+        .end(function (err, rsp) {
+          expect(rsp.status).to.equal(404);
           done();
         });
     });

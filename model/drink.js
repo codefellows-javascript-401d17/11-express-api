@@ -16,16 +16,20 @@ Drink.createDrink = function (_drink) {  //prevent clashing
 
     let drink = new Drink(_drink.name, _drink.flavor, _drink.isAlcoholic);
     return storage.createItem('drink', drink);
-  } 
+  }
   return Promise.reject();
 
 };
 
 
 Drink.fetchDrink = function (id) {
+
   debug('fetchDrink');
-  debug(id);
-  return storage.fetchItem('drink', id);
+
+  if (id) {
+    return storage.fetchItem('drink', id);
+  }
+  return Promise.reject();
 };
 
 Drink.deleteDrink = function (id) {

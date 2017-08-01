@@ -14,6 +14,7 @@ app.get('/api/drink', function (req, rsp, next) {
   Drink.fetchDrink(req.query.id)
     .then((drink) => {
       rsp.json(drink);
+      rsp.end();
     })
     .catch((err) => {
       next(err);
@@ -28,7 +29,7 @@ app.post('/api/drink', jsonParser, function (req, rsp, next) {
       rsp.end();
     })
     .catch((err) => {
-      console.log(err);
+      next(err);
     })
   rsp.json(req.body);
 });
@@ -45,8 +46,13 @@ app.delete('/api/drink', jsonParser, function (req, rsp, next) {
     });
 });
 
-app.use(function (req, res, next) {
+app.get('/*', function (req, rsp, next) {
+
+})
+
+app.use(function (err, req, res, next) {
   if (req.method === 'POST' && !(req.body.isAlcoholic || req.body.name || req.body.flavor)) return next(createError(400, 'invalid'));
+  if (req.method === 'GET' && !req.query.id) return next(createError(400));
   next();
 });
 
