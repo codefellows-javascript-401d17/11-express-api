@@ -34,14 +34,9 @@ app.delete('/api/beer', function(req, res, next) {
   .catch( err => next(err));
 });
 
-app.use(function(err, req, res, next){
+app.use(function(err, req, res, next){ //eslint-disable-line
   debug('error middleware');
-  console.error('hello', err.message);
-
-  // if(err.status){
-  //   res.status(err.status).send(err.name);
-  //   return;
-  // }
+  console.error(err.message);
 
   if(err.status === 404){
     res.status(404).send(err.message);
@@ -53,13 +48,9 @@ app.use(function(err, req, res, next){
     return;
   }
 
-
-
   err = createError(500, err.message);
   res.status(err.status).send(err.name);
 });
-
-
 
 app.listen(PORT, () => {
   debug('server up:', PORT);
