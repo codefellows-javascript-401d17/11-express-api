@@ -6,9 +6,9 @@ const debug = require('debug')('bake:bake');
 const storage = require('../lib/storage.js');
 
 const Bake = module.exports = function(bakedGood, description, calories) {
-  if (!bakedGood) throw new createError(400, 'expected baked good');
-  if (!description) throw new createError(400, 'expected description');
-  if (!calories) throw new createError(400, 'expected expected calories');
+  if (!bakedGood) throw createError(400, 'expected baked good');
+  if (!description) throw createError(400, 'expected description');
+  if (!calories) throw createError(400, 'expected expected calories');
 
   this.id = uuidv4();
   this.bakedGood = bakedGood;
@@ -31,5 +31,11 @@ Bake.fetchBakedGood = function(id) {
   debug('fetchBakedGood');
 
   return storage.fetchItem('bake', id);
+};
+
+Bake.deleteBakedGood = function(id) {
+  debug('deleteBakedGood');
+
+  return storage.deleteItem('bake', id);
 };
 

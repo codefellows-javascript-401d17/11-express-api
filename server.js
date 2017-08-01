@@ -25,7 +25,6 @@ app.post('/api/bake', jsonParser, function(req, res, next) {
   Bake.createBakedGood(req.body)
   .then( bake => res.json(bake))
   .catch( err => next(err));
-  next();
 });
 
 app.get('/api/bake', function(req, res, next) {
@@ -33,6 +32,16 @@ app.get('/api/bake', function(req, res, next) {
 
   Bake.fetchBakedGood(req.query.id)
   .then( bake => res.json(bake))
+  .catch( err => next(err));
+});
+
+app.delete('/api/bake', function(req, res, next) {
+  debug('DELETE: /api/bake');
+
+  Bake.deleteBakedGood(req.query.id)
+  .then( () => {
+    res.status(204).end();
+  })
   .catch( err => next(err));
 });
 
@@ -50,5 +59,5 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on PORT: ${PORT}`);
+  debug(`Server listening on PORT: ${PORT}`);
 });
