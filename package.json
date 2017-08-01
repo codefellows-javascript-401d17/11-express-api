@@ -1,0 +1,38 @@
+{
+  "name": "11-express-api",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) 11: Single Resource Express API ======",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "DEBUG='bake*' node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohjonah/11-express-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ohjonah/11-express-api/issues"
+  },
+  "homepage": "https://github.com/ohjonah/11-express-api#readme",
+  "devDependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "chai": "^4.1.0",
+    "debug": "^2.6.8",
+    "http-errors": "^1.6.1",
+    "mocha": "^3.5.0",
+    "morgan": "^1.8.2",
+    "superagent": "^3.5.2",
+    "uuid": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
