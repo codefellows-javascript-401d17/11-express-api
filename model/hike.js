@@ -8,9 +8,9 @@ const storage = require('../lib/storage.js');
 const Hike = module.exports = function(name, distance, difficulty) {
   debug('hike constructor');
 
-  if(!name) createError(400, 'expected name');
-  if(!distance) createError(400, 'expected distance');
-  if(!difficulty) createError(400, 'expected difficulty');
+  if(!name) throw new Error('expected name');
+  if(!distance) throw new Error('expected distance');
+  if(!difficulty) throw new Error('expected difficulty ');;
 
   this.id = uuidv4();
   this.name = name;
@@ -23,6 +23,8 @@ Hike.createHike = function(_hike){
 
   try {
     let hike = new Hike(_hike.name, _hike.distance, _hike.difficulty);
+    console.log(_hike.name, _hike.distance, _hike.difficulty)
+    console.log('constructed hike', hike);
     return storage.createItem('hike', hike);
   } catch (err){
     return Promise.reject(err);
@@ -36,5 +38,5 @@ Hike.fetchHike = function(id) {
 
 Hike.deleteHike = function(id){
   debug('deleteHike');
-  return storage.deleteItem('hike', id)
-}
+  return storage.deleteItem('hike', id);
+};

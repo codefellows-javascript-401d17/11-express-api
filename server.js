@@ -37,7 +37,10 @@ app.delete('/api/hike', function(req, res, next){
   debug('DELETE: /api/hike');
 
   Hike.deleteHike(req.query.id)
-  .then( hike => res.json(hike))
+  .then( () => {
+    createError(204, 'no content');
+    return;
+  }) //i'm a little confused what happens here. This is questionable....
   .catch( err => next(err));
 });
 
