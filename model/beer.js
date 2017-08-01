@@ -8,9 +8,9 @@ const storage = require('../lib/storage.js');
 const Beer = module.exports = function(name, style, IBU) {
   debug('beer constructor');
 
-  if (!name) return Promise.reject(createError(400, 'expected name'));
-  if (!style) return Promise.reject(createError(400, 'expected style'));
-  if (!IBU) return Promise.reject(createError(400, 'expected IBU'));
+  if (!name) throw new Error('expected content');
+  if (!style) throw new Error('expected content');
+  if (!IBU) throw new Error('expected content');
 
   this.id = uuidv4();
   this.name = name;
@@ -24,8 +24,8 @@ Beer.createBeer = function(_beer) {
   try {
     let beer = new Beer(_beer.name, _beer.style, _beer.IBU);
     return storage.createItem('beer', beer);
-  } catch(err) {
-    return Promise.reject(err);
+  } catch (err) {
+    return Promise.reject(createError(400, 'bad request'));
   }
 };
 
