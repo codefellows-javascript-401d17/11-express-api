@@ -24,6 +24,7 @@ app.post('/api/car', jsonParser, function(req, res, next) {
   Car.createCar(req.body)
   .then( car => res.json(car))
   .catch( err => next(err));
+  next();
 });
 
 app.get('/api/car', function(req, res, next) {
@@ -34,7 +35,7 @@ app.get('/api/car', function(req, res, next) {
   .catch( err => next(err));
 });
 
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   debug('error middleware');
   console.error(err.message);
 
