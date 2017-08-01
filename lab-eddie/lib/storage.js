@@ -2,12 +2,15 @@
 
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'), { suffix: 'Prom' });
+const createError = require('http-errors');
+const debug = require('debug')('note:storage')
 
 module.exports = exports = {};
 
 exports.createItem = function(category, item) {
-  if(!category) return Promise.reject(new Error(`Expecte category`));
-  if(!item) return Promise.reject(new Error('Expected item'));
+  debug('createItem');
+  if(!category) return Promise.reject(createError(400, 'expected category'));
+  if(!item) return Promise.reject(createError(400, 'expected item'));
   
   let stringObj = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${category}/${item.id}.json`, stringObj)
@@ -15,8 +18,10 @@ exports.createItem = function(category, item) {
   .catch(err => Promise.reject(err));
 }
 
+
 exports.fetchItem = function(category, id) {
-  if(!category) return Promise.reject(new Error(`Expecte category`));
+  debug('fetchItem');
+  if(!category) return Promise.reject(createError(400, 'expected category'));
   if(!id) return exports.fetchCategory(category);
   
 
@@ -32,8 +37,9 @@ exports.fetchItem = function(category, id) {
 };
 
 exports.deleteItem = function(category, id) {
-  if(!category) return Promise.reject(new Error(`Expecte category`));
-  if(!id) return Promise.reject(new Error('Expected item'));
+  debug('deleteItem');
+  if(!category) return Promise.reject(createError(400, 'expected category'));
+  if(!id) return Promise.reject(createError(400, 'expected id'));
 
   return fs.unlinkProm(`${__dirname}/../data/${category}/${id}.json`)
   .then(() => '')
@@ -42,7 +48,8 @@ exports.deleteItem = function(category, id) {
 };
 
 exports.fetchCategory= function(category) {
-  if(!category) return Promise.reject(new Error(`Expecte category`));
+  debug('fetchCategory');
+  if(!category) return Promise.reject(createError(400, 'expected category'));
 
   return fs.readdirProm(`${__dirname}/../data/${category}`)
   .then(data => {

@@ -1,6 +1,7 @@
 'use strict';
 
 const debug = require('debug')('app:model-paths');
+const createError = require('http-errors');
 const jsonParser = require('body-parser').json();
 const storage = require('./storage.js');
 const Person = require('../model/person.js');
@@ -30,12 +31,15 @@ modelRoutes.allRoutes = function(model, router) {
 
 
 modelRoutes.modelGet = function(model,router) {
-  router.get(`/api/${model}`,jsonParser, function(req, res, next) {
+  router.get(`/api/${model}`, function(req, res, next) {
     debug(`GET: api/${model}`);
     if (req.query) {
       storage.fetchItem(`${model}`, req.query.id)
       .then(item => res.json(item))
-      .catch(err => next(err));
+      .catch(err => {
+        err = createError(404, err.message);
+        next(err);
+      });
 
       return;
 
@@ -43,10 +47,13 @@ modelRoutes.modelGet = function(model,router) {
       
       storage.fetchItem(`${model}`)
       .then(item => res.json(item))
-      .catch(err => next(err));
-
+      .catch(err => {
+        err = createError(404, err.message);
+        next(err);
+      });
       return;
     };
+
   });
 };
 
@@ -59,12 +66,19 @@ modelRoutes.modelPost = function(model, router) {
       
       params.push(req.body[key]);
     }
-
-    var newObj = new modelRoutes.models[model](...params);
+    try {
+      var newObj = new modelRoutes.models[model](...params);
+    } catch(err) {
+      err = createError(400, err.message);
+      next(err);
+    }
 
     storage.createItem(`${model}`, newObj)
     .then(item => res.json(item))
-    .catch(err => next(err));
+    .catch(err => {
+      err = createError(400, err.message);
+      next(err);
+    });
   });
 }
 

@@ -7,7 +7,29 @@ require('../server.js');
 
 describe('person Routes', function() {
   var person = null;
-
+  describe('POST: /api/person(no params)', function() {
+    it('should return a 400 code', function(done) {
+      request.post('localhost:3000/api/person')
+      .send({})
+      .end((err, res) => {
+        if (err) {
+          expect(err.status).to.equal(400);
+          done();
+        }
+      });
+    });
+  });
+  describe('GET: /api/person (Invalid id)', function() {
+    it('should return a a 404 code', function(done) {
+      request.get(`localhost:3000/api/person?id=2123321423`)
+      .end((err, res) => {
+        if (err) {
+          expect(err.status).to.equal(404);
+          done()
+        }
+      });
+    });
+  });
   describe('POST: /api/person', function() {
     it('should return a person', function(done) {
       request.post('localhost:3000/api/person')
@@ -52,6 +74,7 @@ describe('person Routes', function() {
       });
     });
   });
+
   describe('DELETE: /api/person', function() {
     it('should return a an empty object', function(done) {
       request.delete(`localhost:3000/api/person?id=${person.id}`)
