@@ -14,6 +14,7 @@ const Drink = module.exports = function (name, flavor, isAlcoholic) {
 
 Drink.createDrink = function (_drink) {  //prevent clashing
   debug('createDrink');
+
   try {
     debug('try block');
     var drink = new Drink(_drink.name, _drink.flavor, _drink.isAlcoholic);
@@ -26,7 +27,6 @@ Drink.createDrink = function (_drink) {  //prevent clashing
 
 
 Drink.fetchDrink = function (id) {
-
   debug('fetchDrink');
   try {
     debug('has id', id);

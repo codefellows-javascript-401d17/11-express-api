@@ -14,7 +14,8 @@ app.get('/api/drink', function (req, rsp, next) {
   if (!(req.query.id)) {
     next(createError(400, 'bad request'));
     return;
-  }
+  };
+  debug(req.query);
   Drink.fetchDrink(req.query.id)
     .then((drink) => {
       rsp.json(drink);
