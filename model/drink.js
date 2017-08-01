@@ -4,8 +4,8 @@ const storage = require('../lib/storage.js');
 const createError = require('http-errors');
 
 const Drink = module.exports = function (name, flavor, isAlcoholic) {
-  if(!name) throw createError(400, 'bad request - no name provided');
-  if(!flavor) throw createError(400, 'bad reqeuest - no flavor provided');
+  if(!name) return createError(400, 'bad request - no name provided');
+  if(!flavor) return createError(400, 'bad reqeuest - no flavor provided');
   this.id = uuid();
   this.name = name;
   this.flavor = flavor;

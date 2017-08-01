@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const debug = require('debug')('drink:server');
 const storage = require('./lib/storage.js');
+const createError = require('http-errors');
 
 
 app.get('/api/drink', function (req, rsp, next) {
@@ -21,7 +22,11 @@ app.get('/api/drink', function (req, rsp, next) {
 
 app.post('/api/drink', jsonParser, function (req, rsp, next) {
   debug('POST: /drink');
+  if(!Object.keys(req.body).includes('name', 'isAlcoholic', 'flavor')) {
+    return next.createError(400, 'bad request');
+  }
   
+
   Drink.createDrink(req.body)
     .then((drink) => {
       rsp.json(drink);
@@ -46,8 +51,7 @@ app.use(function (err, req, rsp, next) {
   debug('error middleware');
   debug(err);
   if (err.status) {
-    rsp.status(err.status).send(err.message);
-    return;
+    return rsp.status(err.status).send(err.message);
   }
 });
 
