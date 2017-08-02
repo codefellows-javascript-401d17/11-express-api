@@ -6,9 +6,9 @@ const debug = require('debug')('pokemon:pokemon');
 const storage = require('../lib/storage.js');
 
 const Pokemon = module.exports = function(name, type, gen) {
-  if(!name)throw new Error('expect Pokemon name');
-  if(!type)throw new Error('expected Pokemon type');
-  if(!gen)throw new Error('expected a generation');
+  if(!name) return Promise.reject(createError(400, 'expected name'));
+  if(!type) return Promise.reject(createError(400, 'expected type'));
+  if(!gen) return Promise.reject(createError(400, 'expected gen'));
 
   this.id = uuidv4();
   this.name = name;

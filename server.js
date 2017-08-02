@@ -12,25 +12,28 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.get('/test', function(req, res) {
-  debug('GET: /test');
-  res.json({msg: 'hello from the land of /test'});
+app.get('/api/pokemon', function(req, res, next) {
+  debug('GET: /api/pokemon');
+
+  Pokemon.fetchPokemon(req.query.id)
+  .then( pokemon => res.json(pokemon))
+  .catch( err => next(err));
 });
 
 app.post('/api/pokemon', jsonParser, function(req, res, next) {
   debug('POST: /api/pokemon');
 
   Pokemon.createPokemon(req.body)
-  .then(pokemon => res.json(pokemon))
-  .catch(err => next(err));
+  .then( pokemon => res.json(pokemon) )
+  .catch( err => next(err) );
 });
 
 app.delete('/api/pokemon', function(req, res, next) {
   debug('DELETE: /api/pokemon');
 
   Pokemon.deletePokemon(req.query.id)
-  .then(() => createError(204, 'pokemon deleted'))
-  .catch((err) => next(err));
+  .then( () => createError(204, 'pokemon deleted') )
+  .catch( err => next(err) );
 });
 
 app.use(function(err, req, res, next) {
@@ -49,4 +52,3 @@ app.use(function(err, req, res, next) {
 app.listen(PORT, () => {
   debug('server up:', PORT);
 });
-
