@@ -4,7 +4,7 @@
   "description": "![cf](https://i.imgur.com/7v5ASc8.png) 11: Single Resource Express API ======",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "DEBUG='pokemon*' mocha",
     "start": "DEBUG='pokemon*' node server.js"
   },
   "repository": {

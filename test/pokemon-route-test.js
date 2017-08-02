@@ -25,7 +25,6 @@ describe('Pokemon Routes', function() {
 
     it('POST: should return 400', function(done) {
       request.post('localhost:8000/api/pokemon')
-      .send({name: 'test name', type: 'test type', gen: 'test gen'})
       .end((err, res) => {
         expect(res.status).to.equal(400);
         done();
@@ -46,16 +45,16 @@ describe('Pokemon Routes', function() {
       });
     });
 
-    it('GET: should return 404', function(done) {
+    it('should return 404', function(done) {
       request.get('localhost:8000/api/pokemon?id=12345')
-      .end(function(err, res) {
+      .end((err, res) => {
         expect(res.status).to.equal(404);
         done();
       });
     });
 
     it('GET: should return 400', function(done) {
-      request.get('localhost:8000/api/pokemon?=128933')
+      request.get('localhost:8000/api/pokemon?=123455')
       .end(function(err, res) {
         expect(res.status).to.equal(400);
         done();
