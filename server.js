@@ -29,7 +29,7 @@ app.delete('/api/pokemon', function(req, res, next) {
   debug('DELETE: /api/pokemon');
 
   Pokemon.deletePokemon(req.query.id)
-  .then(() => createError(204, 'song deleted'))
+  .then(() => createError(204, 'pokemon deleted'))
   .catch((err) => next(err));
 });
 
